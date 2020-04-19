@@ -85,7 +85,7 @@
 (defun main ()
     (init-irt)
     (go-to-chair-spot)
-    (move-chair-with-l-hand)
+    (grab-chair-with-l-hand)
     (remove-chair)
     (grab-box-with-r-hand)
     (return-chair)
