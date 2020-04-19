@@ -1,11 +1,13 @@
 (load "package://pr2eus/pr2.l")
 (load "models/room73b2-scene.l")
+(load "package://pr2eus/pr2-interface.l")
 
 (defun init-irt ()
     (setq *pr2* (pr2))
     (setq *room* (room73b2))
     (setq *chair* (send *room* :object "room73b2-chair0"))
     (objects (list *pr2* *room*))
+    (pr2-init)
     )
 
 (defun go-to-chair-spot ()
@@ -85,7 +87,7 @@
 (defun main ()
     (init-irt)
     (go-to-chair-spot)
-    (move-chair-with-l-hand)
+    (grab-chair-with-l-hand)
     (remove-chair)
     (grab-box-with-r-hand)
     (return-chair)
