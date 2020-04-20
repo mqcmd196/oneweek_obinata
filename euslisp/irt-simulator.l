@@ -6,7 +6,7 @@
     (setq *room* (room73b2))
     (setq *chair* (send *room* :object "room73b2-chair0"))
     (objects (list *pr2* *room*))
-    )
+)
 
 (defun go-to-chair-spot ()
     ;; (setq *chair-spot* (send *chair* :worldpos))
@@ -15,7 +15,7 @@
     (send *pr2* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
     (send *pr2* :move-to (make-coords :pos #f(1600 0 0)))
     (send *pr2* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
-    )
+)
 
 (defun grab-chair-with-l-hand ()
     ;; look at the chair
@@ -33,7 +33,7 @@
     (send *pr2* :larm :end-coords :assoc *chair*)
     ;; pull back
     (send *pr2* :move-to (make-coords :pos #f(-350 0 0)))
-    )
+)
 
 (defun remove-chair ()
     ;; remove the chair. This code has a little problem.
@@ -80,7 +80,7 @@
     (if (send *chair* :parent) (send (send *chair* :parent) :dissoc *chair*))
     (send *pr2* :move-to (make-coords :pos #f(-400 0 0)))
     (send *pr2* :reset-pose)
-    )
+)
 
 (defun main ()
     (init-irt)
@@ -89,6 +89,6 @@
     (remove-chair)
     (grab-box-with-r-hand)
     (return-chair)
-    )
+)
 
 (main)
