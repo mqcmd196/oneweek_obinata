@@ -1,20 +1,29 @@
 (load "package://pr2eus/pr2.l")
 (load "models/room73b2-scene.l")
+(load "package://pr2eus/pr2-interface.l")
 
-(defun init-irt ()
+(defun init ()
     (setq *pr2* (pr2))
     (setq *room* (room73b2))
     (setq *chair* (send *room* :object "room73b2-chair0"))
     (objects (list *pr2* *room*))
+    (setq *ri* (instance pr2-interface :init :objects (send *room* :objects)))
 )
 
 (defun go-to-chair-spot ()
     ;; (setq *chair-spot* (send *chair* :worldpos))
+    ;; kinematics-simulatorで斜めに移動するのを修正したほうがいいかも
     ;; 目標のイスの前まで移動
     (send *pr2* :move-to (make-coords :pos #f(4500 0 0) :rpy #f(0 0 0)) :world)
+    ;; (send *ri* :move-to (make-coords :pos #f(4500 0 0) :rpy #f(0 0 0)))
     (send *pr2* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
+    ;; (send *ri* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
     (send *pr2* :move-to (make-coords :pos #f(1600 0 0)))
+    ;; (send *ri* :move-to (make-coords :pos #f(1600 0 0)))
     (send *pr2* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
+    ;; (send *ri* :move-to (make-coords :rpy (float-vector pi/2 0 0)))
+    (send *ri* :move-to (make-coords :pos #f(4500 1600 0) :rpy (float-vector pi 0 0)))
+    
 )
 
 (defun grab-chair-with-l-hand ()
@@ -29,6 +38,7 @@
                 :move-target (send *pr2* :larm :end-coords)
                 :rotation-axis :z
                 :debug-view t)
+    (send *ri* :angle-vector (send *pr2* :angle-vector) 10000)
     ;; assoc the chair and the l-arm
     (send *pr2* :larm :end-coords :assoc *chair*)
     ;; pull back
@@ -83,10 +93,10 @@
 )
 
 (defun main ()
-    (init-irt)
+    (init)
     (go-to-chair-spot)
-    (grab-chair-with-l-hand)
-    (remove-chair)
-    (grab-box-with-r-hand)
-    (return-chair)
+    ;; (grab-chair-with-l-hand)
+    ;; (remove-chair)
+    ;; (grab-box-with-r-hand)
+    ;; (return-chair)
 )
