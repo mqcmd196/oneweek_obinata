@@ -39,21 +39,33 @@
                 :rotation-axis :z
                 :debug-view t)
     (send *ri* :angle-vector (send *pr2* :angle-vector) 10000)
+    (send *ri* :wait-interpolation)
     ;; assoc the chair and the l-arm
     (send *pr2* :larm :end-coords :assoc *chair*)
+    ;; grasp
+    (send *ri* :start-grasp)
+    (send *ri* :wait-interpolation)
     ;; pull back
     (send *pr2* :move-to (make-coords :pos #f(-350 0 0)))
+    (send *ri* :go-pos -0.35 0)
+    (send *ri* :wait-interpolation)
 )
 
 (defun remove-chair ()
     ;; remove the chair. This code has a little problem.
-    (send *pr2* :larm :move-end-pos #f(200 -500 0) :parent
+    (send *pr2* :larm :move-end-pos #f(200 -400 0) :parent
                 :debug-view t :look-at-target t)
+    (send *ri* :angle-vector (send *pr2* :angle-vector) 10000)
+    (send *ri* :wait-interpolation)
     (send *pr2* :larm :move-end-rot 90 :z :parent
                 :debug-view t :look-at-target t)
+    (send *ri* :angle-vector (send *pr2* :angle-vector) 10000)
+    (send *ri* :wait-interpolation)
     ;; THIS IS OPTIONAL or should rotate more angle...
     (send *pr2* :larm :move-end-rot 30 :z :parent
                 :debug-view t :look-at-target t)
+    (send *ri* :angle-vector (send *pr2* :angle-vector) 10000)
+    (send *ri* :wait-interpolation)
 )
 
 (defun grab-box-with-r-hand ()
