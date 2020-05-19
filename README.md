@@ -17,3 +17,14 @@ tuck-arm-pose ;;腕閉じる
 ```
 
 rosdistroではgo-pos-unsafeがroseus単体で使用可能なpr2eusバージョンが出ていない．単独でpr2eusをクローンしてビルドする必要がある
+
+
+world
+```
+roslaunch pr2_gazebo pr2_empty_world.launch world_name:=/home/obinata/hogehoge.world
+```
+
+:move-trajectory-sequenceを使うとbaseとアームが同時に動かせるかも?
+https://github.com/chiwunau/pr2_open_b2_door_demo/blob/master/euslisp/pull-open-door.l#L135-L140
+
+https://github.com/chiwunau/pr2_open_b2_door_demo
